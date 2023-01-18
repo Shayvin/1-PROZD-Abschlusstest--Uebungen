@@ -1,0 +1,104 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node
+{
+    int data;
+    struct node* next;
+};
+
+struct node* head;
+struct node* temp;
+struct node* newNode;
+
+struct node* createNode(int input)
+{
+    newNode = (struct node*)malloc(sizeof(struct node));
+    newNode->data = input;
+    newNode->next = NULL;
+    return newNode;
+};
+
+struct node* addLast(int input)
+{
+    temp = head;
+    newNode = createNode(input);
+    while(temp->next != NULL)
+    {
+        temp = temp->next;
+    }
+    temp->next = newNode;
+    return newNode;
+};
+
+struct node* addFirst(int input)
+{
+    newNode = createNode(input);
+    newNode->next = head;
+    head = newNode;
+    return head;
+};
+
+void printList()
+{
+
+    temp = head;
+    while(temp != NULL)
+    {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+}
+
+void printAverage(struct node* temp)
+{
+    int count = 0;
+    float sum = 0;
+    float result = 0;
+    temp = head;
+    while(temp != NULL)
+    {
+        sum += temp->data;
+        count++;
+        temp = temp->next;
+    }
+    result = sum / count;
+    printf("%.2lf", result);
+}
+
+int main()
+{
+    int input = 0;
+    temp = head;
+    while(1)
+    {
+        printf("\nEnter number: ");
+        scanf("%d", &input);
+        if(input == 0)
+            break;
+        if(head == NULL)
+        {
+            head = createNode(input);
+            printf("List : ");
+            printList();
+        }
+        else
+        {
+        if(input % 2 == 0)
+        {
+            temp = addFirst(input);
+            printf("List : ");
+            printList();
+
+        }
+        else
+        {
+            temp = addLast(input);
+            printf("List : ");
+            printList();
+        }
+        }
+    }
+    printAverage(temp);
+    return 0;
+}
