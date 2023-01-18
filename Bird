@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct bird
+{
+    int height;
+    int count;
+};
+
+void printBird(struct bird* bird)
+{
+    printf("\nThe bird is flying at a height of %d meters", bird->height);
+}
+
+char askInput()
+{
+    char input;
+    printf("\nMove the bird up (w) or down (s)");
+    scanf(" %c", &input);
+    return input;
+}
+
+void moveBird(struct bird* bird, char input)
+{
+    if(input == 'w')
+    {
+        ++bird->height;
+        ++bird->count;
+    }
+    else if(input == 's')
+    {
+        --bird->height;
+    }
+    else
+    {
+        printf("\nInvalid move!");
+    }
+}
+
+int main()
+{
+    struct bird bird = {0};
+    while(1)
+    {
+        moveBird(&bird, askInput());
+        if(bird.height < 0)
+        {
+        printf("\nInvalid move!\n");
+        printf("Max height reached: %d", bird.count);
+        break;
+        }
+        printBird(&bird);
+    }
+
+    return 0;
+}
