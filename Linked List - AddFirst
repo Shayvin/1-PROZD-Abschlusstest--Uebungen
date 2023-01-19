@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node
+{
+    int data;
+    struct node* next;
+};
+
+struct node* temp;
+struct node* head;
+struct node* newNode;
+
+struct node* addFirst(int input, struct node* head)
+{
+    newNode = (struct node*)malloc(sizeof(struct node));
+    if(newNode != NULL)
+    {
+        newNode->data = input;
+        newNode->next = head;
+    }
+    return newNode;
+};
+
+void printList(struct node* head)
+{
+    temp = head;
+    while(temp != NULL)
+    {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+}
+
+int main()
+{
+ int input = 0;
+    struct node* head = NULL;
+    while(1)
+    {
+        printf("\nEnter number: ");
+        scanf("%d", &input);
+        printf("List: ");
+        head = addFirst(input, head);
+        printList(head);
+        if(input == 0)
+            break;
+        if(head == NULL)
+        {
+            head = addFirst(input, head);
+            printf("List : ");
+            printList(head);
+        }
+    }
+}
