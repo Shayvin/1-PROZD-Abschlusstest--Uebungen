@@ -25,6 +25,7 @@ void moveBird(struct bird* bird, char input)
     if(input == 'w')
     {
         ++bird->height;
+        if(bird->count < bird->height)
         ++bird->count;
     }
     else if(input == 's')
@@ -40,17 +41,21 @@ void moveBird(struct bird* bird, char input)
 int main()
 {
     struct bird bird = {0};
+    char temp;
     while(1)
     {
-        moveBird(&bird, askInput());
+        temp = askInput();
+        if(temp != 's' && temp != 'w')
+            break;
+        moveBird(&bird, temp);
         if(bird.height < 0)
         {
-        printf("\nInvalid move!\n");
-        printf("Max height reached: %d", bird.count);
-        break;
+            break;
         }
         printBird(&bird);
     }
-
+    printf("\nInvalid move!\n");
+    printf("Max height reached: %d", bird.count);
     return 0;
 }
+
