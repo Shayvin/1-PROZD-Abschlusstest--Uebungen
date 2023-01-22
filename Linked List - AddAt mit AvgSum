@@ -1,0 +1,114 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node
+{
+    int value;
+    struct node* next;
+};
+
+struct node* createNode(int input)
+{
+struct node* newNode = (struct node*)malloc(sizeof(struct node));
+newNode->value = input;
+return newNode;
+}
+
+struct node* addFirst(int input, struct node* head)
+{
+    struct node* newHead = createNode(input);
+    if(newHead != NULL)
+    {
+        newHead->value = input;
+        newHead->next = head;
+    }
+    return newHead;
+};
+
+void printList(struct node* head)
+{
+    while(head != NULL)
+    {
+        printf(" %d", head->value);
+        head = head->next;
+    }
+}
+
+void deleteList(struct node* head) {
+    struct node* current = head;
+    if(current == NULL)
+    {
+        return;
+    }
+    deleteList(head->next);
+    free(current);
+    current = NULL;
+}
+
+void avgSum(struct node* head)
+{
+    int count = 0;
+    float value = 0;
+    while(head != NULL)
+    {
+        value += head->value;
+        count++;
+        head = head->next;
+    }
+    printf("Average Sum: %lf", value / count);
+}
+
+struct node* addAt(int index, int input, struct node* head)
+{
+    if(index==0)
+    {
+        return addFirst(input, head);
+    }
+    int counter = 0;
+    struct node* temp = head;
+    struct node* beforeTemp = NULL;
+    while(temp != NULL)
+    {
+        if(index == counter)
+    {
+        struct node* newNode = createNode(input);
+        newNode->next = temp;
+        beforeTemp->next = newNode;
+        return head;
+    }
+        beforeTemp = temp;
+        temp = temp->next;
+        ++counter;
+    }
+    if(index == counter)
+    {
+        struct node* newNode = createNode(input);
+        newNode->next = temp;
+        beforeTemp->next = newNode;
+    }
+    return head;
+}
+
+int main()
+{
+    int input = 0;
+    int index = 0;
+    struct node* head = NULL;
+    while(1)
+    {
+        printf("\nValue: ");
+        scanf("%d", &input);
+        if(input == 0)
+        {
+            break;
+        }
+        printf("\nIndex: ");
+        scanf("%d", &index);
+        head = addAt(index, input, head);
+        printList(head);
+
+    }
+    avgSum(head);
+    deleteList(head);
+    return 0;
+}
